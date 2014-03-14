@@ -1,10 +1,21 @@
 require 'sinatra'
 require 'sinatra/reloader'
 
-@@todos = []
+@@todos = ["mow the lawn", "walk the dog"]
 
 get '/' do 
 	erb :todos, locals: {
-		todos: @@todos
+		todo_list: @@todos
 	}
+end
+
+post '/add' do
+	@@todos << params[:todo]	
+	redirect to ('/')
+end
+
+
+post '/remove/:i' do
+	@@todos.delete_at (params[:i].to_i)
+	redirect to ('/')
 end
